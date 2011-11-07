@@ -857,11 +857,14 @@ CanvasElementAntsMap.prototype.draw = function() {
 	this.setFillColor(255, 255, 255, 0.5);
 	var overlay_history = this.state.replay.meta['replaydata']['overlay_history'];
 	for (var player = 0; player < this.state.replay.meta['playernames'].length; player++) {
+	  if (this.state.fogPlayer !== undefined && player !== this.state.fogPlayer) {
+		continue;
+	  }
 	  var overlays = overlay_history[player][this.turn];
 	  if(overlays != null) {
 		  for(i = 0; i < overlays.length; i++) {
 			  // process visualizer commands
-			  overlay = overlays[i].split(',');
+			  var overlay = overlays[i].split(',');
 			  switch (overlay[0]) {
 				  case 'setLineWidth':
 					  this.setLineWidth(Number(overlay[1]));
